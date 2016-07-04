@@ -1,0 +1,26 @@
+*{margin:0;padding:0}
+#headContainer {
+     height:100px;
+     background:#cdcbcb;
+}
+ #functionArea {
+            background-color:#ff0000;
+            height:auto;
+            width:250px;
+            float:left;
+
+        }
+#mapArea {
+            background-color:#ffffff;
+            float:left;
+            height:auto;
+        }
+ .map {
+        height: 100%;
+        width: 100%;
+      }
+#propertyArea {
+            background-color:#b6ff00;
+            width:300px;
+            float:right;
+        }

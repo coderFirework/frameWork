@@ -1,9 +1,20 @@
 {% extends "ibase.html" %}
-{% block content %}
-{{ super() }}
-<div class="panel panel-default">
-  <div class="panel-body">
-    Basic panel example
-  </div>
+{% block icontent %}
+  <div id="mapArea" style="float:left;background:#2788da">
+  <div id="map" class="map">map</div>
 </div>
+<div id="propertyArea"  style="float:left;background:#ccddee">属性区</div>
+</div>
+
+<div class="panel panel-default" id="searchContainer"style="position:absolute;margin-left:20px;margin-top:25px;width:200px;height:350px">
+  <div class="panel-heading">
+    <h3 class="panel-title"><span id="search_title_caption">按养殖户检索</span><img id="search_title_icon" src="../static/images/open.png" style="width:20px;height:20px;float:right"></h3>
+  </div>
+  <div class="panel-body" id="searchContent">
+    Panel content
+  </div>
 {% endblock %}
+  {% block scripts %}
+  {{ super() }}
+  <script src="../static/js/main/main.js"></script>
+  {% endblock %}
