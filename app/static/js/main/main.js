@@ -1,12 +1,12 @@
 var searchCaption = $("#search_title_caption");
 var searchIcon = $("#search_title_icon");
-var searchContent = $("#searchContent")
-var searchContainer = $("#searchContainer")
+var searchContent = $("#searchContent");
+var searchContainer = $("#searchContainer");
 
 function modiSearch(){
-    alert("hi");
-    searCaption.hidden();
-    searchContent.hidden();
+    alert(searchCaption);
+    searchCaption.hide();
+    searchContent.hide();
     searchContainer.width(24);
 
 }
