@@ -1,15 +1,16 @@
-var searchCaption = $("#search_title_caption");
-var searchIcon = $("#search_title_icon");
-var searchContent = $("#searchContent");
+var tips =$("#tips");
+var searchIcon=$("#search_title_icon");
 var searchContainer = $("#searchContainer");
 
 function modiSearch(){
-    alert(searchCaption);
-    searchCaption.hide();
-    searchContent.hide();
-    searchContainer.width(24);
-
+    searchContainer.hide();
+    tips.show();
+}
+function showSearch(){
+    searchContainer.show();
+    tips.hide();
 }
 $(document).ready(new function(){
     searchIcon.click(modiSearch);
+    tips.click(showSearch);
 });

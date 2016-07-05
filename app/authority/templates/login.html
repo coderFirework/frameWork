@@ -1,28 +1,178 @@
 {% extends "ibase.html" %}
+{% block styles %}
+{{ super() }}
+<link href="../static/css/ol.css" rel="stylesheet" type="text/css" />
+<style>
+      .ol-popup {
+        position: absolute;
+        background-color: white;
+        -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+        filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid #cccccc;
+        bottom: 12px;
+        left: -50px;
+        min-width: 280px;
+      }
+      .ol-popup:after, .ol-popup:before {
+        top: 100%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+      }
+      .ol-popup:after {
+        border-top-color: white;
+        border-width: 10px;
+        left: 48px;
+        margin-left: -10px;
+      }
+      .ol-popup:before {
+        border-top-color: #cccccc;
+        border-width: 11px;
+        left: 48px;
+        margin-left: -11px;
+      }
+      .ol-popup-closer {
+        text-decoration: none;
+        position: absolute;
+        top: 2px;
+        right: 8px;
+      }
+      .ol-popup-closer:after {
+        content: "✖";
+      }
+      .popover-content {
+        min-width: 180px;
+      }
+      div.ol-zoom{
+				/*隐藏地图左上角的+-号*/
+				display: none;
+			}
+	div.ol-attribution{
+	/*隐藏i*/
+				display: none;
+	}
+    </style>
+{% endblock %}
 {% block icontent %}
-  <div id="mapArea" style="float:left;background:#2788da">
-  <div id="map" class="map">map</div>
+<div id="mapArea" style="float:left">
+  <div id="map" class="map"></div>
+      <!-- Popup -->
+      <div id="popup" class="ol-popup">
+      <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+      <div id="popup-content"></div>
+    </div>
 </div>
-<div id="propertyArea"  style="float:left;background:#ccddee">属性区</div>
-</div>
-
-<div style="position:absolute;margin-left:20px;margin-top:25px;width:200p">
-  <img id="search_title_open" src="../static/images/open.png"style="width:20px;height:20px"/>
-</div>
-<div class="panel panel-default" style="position:absolute;margin-left:20px;margin-top:25px;width:40px;height:40px;text-align:center;display:table-cell;vertical-align:middle">
-<img  src="../static/images/open.png" style="width:20px;height:20px">
+<div id="propertyArea">
+    <div class="panel panel-default"   style="margin:10px">
+  <div class="panel-heading">
+    <h3 class="panel-title"><span >属性信息</span></h3>
   </div>
+  <div class="panel-body" >
+      <table class="table table-bordered">
+          <tr><td>1</td><td>aaaaa</td><td>1</td></tr>
+          <tr><td>2</td><td>bbbbb</td><td>1</td></tr>
+          <tr><td>3</td><td>ccccc</td><td>1</td></tr>
+          <tr><td>4</td><td>ddddd</td><td>1</td></tr>
+</table>
+  </div>
+</div>
+</div>
 
-<div class="panel panel-default" id="searchContainer" style="position:absolute;margin-left:20px;margin-top:25px;width:200px;height:350px;display:none">
+
+<div id ="tips" class="panel panel-default" style="position:absolute;margin-left:20px;margin-top:25px;width:40px;height:40px;text-align:center;vertical-align:middle">
+  <img  src="../static/images/open.png" style="width:20px;height:20px;margin-top:8px">
+</div>
+
+<div class="panel panel-default" id="searchContainer" style="position:absolute;margin-left:20px;margin-top:25px;width:200px;height:350px;">
   <div class="panel-heading">
     <h3 class="panel-title"><span id="search_title_caption">按养殖户检索</span><img id="search_title_icon" src="../static/images/close.png" style="width:20px;height:20px;float:right"></h3>
   </div>
   <div class="panel-body" id="searchContent">
-    Panel content
+    <div class="form-group">
+    <label for="exampleInputEmail1">养殖户姓名</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="">
   </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">水面面积</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="">
   </div>
+      <button type="submit" class="btn btn-default" style="float:right">检索</button>
+  </div>
+</div>
 {% endblock %}
-  {% block scripts %}
-  {{ super() }}
-  <script src="../static/js/main/main.js"></script>
-  {% endblock %}
+{% block scripts %}
+{{ super() }}
+<script src="../static/js/main/main.js"></script>
+<script src="../static/js/ol.js"></script>
+<script>
+var map;
+var center = [120.922108, 30.850540];
+var baseMap = new ol.layer.Tile({
+                        source: new ol.source.OSM()
+                    });
+var bingMap = new ol.layer.Tile({
+            source: new ol.source.BingMaps({
+              key: 'Your Bing Maps Key from http://www.bingmapsportal.com/ here',
+              imagerySet: 'Aerial'
+            })
+          });
+var layers=[baseMap];
+var views = new ol.View({
+                        projection: 'EPSG:4326',
+                        center: center,
+                        zoom: 7
+                    });
+
+map = new ol.Map({
+                   layers: layers,
+                   target: document.getElementById('map'),
+                   view: views
+                    });
+ /**
+       * Elements that make up the popup.
+       */
+      var container = document.getElementById('popup');
+      var content = document.getElementById('popup-content');
+      var closer = document.getElementById('popup-closer');
+
+      /**
+       * Create an overlay to anchor the popup to the map.
+       */
+      var overlay = new ol.Overlay(/** @type {olx.OverlayOptions} */ ({
+        element: container,
+        autoPan: true,
+        autoPanAnimation: {
+          duration: 250
+        }
+      }));
+
+
+      /**
+       * Add a click handler to hide the popup.
+       * @return {boolean} Don't follow the href.
+       */
+      closer.onclick = function() {
+        overlay.setPosition(undefined);
+        closer.blur();
+        return false;
+      };
+      map.addOverlay(overlay);
+      /**
+       * Add a click handler to the map to render the popup.
+       */
+      map.on('singleclick', function(evt) {
+        var coordinate = evt.coordinate;
+        var hdms = ol.coordinate.toStringHDMS(ol.proj.transform(
+            coordinate, 'EPSG:3857', 'EPSG:4326'));
+
+        content.innerHTML = '<p>鱼塘详情:</p><code>' + hdms +
+            '</code>';
+        overlay.setPosition(coordinate);
+      });
+</script>
+{% endblock %}

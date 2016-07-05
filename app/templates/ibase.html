@@ -3,58 +3,70 @@
 {% block styles %}
 {{ super() }}
 <link href="../static/css/ibase.css" rel="stylesheet" type="text/css" />
+<style>
+	.navbar-nav>li>a{
+	    color:#ffffff !important;
+	    font-family:黑体;
+	    font-size:16px
+	}
+	.navbar-nav>.open>a{
+	    background-color:transparent !important;
+	}
+</style>
 {% endblock %}
 {% block body %}
 <div id="rootContainer">
     {% block navbar %}
-<nav class="navbar navbar-default"style="height:100px;margin-bottom:0px">
-  <div class="container-fluid" style="position:absolute;bottom:0px">
-    <!-- Brand and toggle get grouped for better mobile display -->
-      <div id="nav_icon" style="width:100px;height:100px;float:left;display:none">
-          <img style="width:100px;height:100px"src="../static/images/fish.png">
-      </div>
-      <div id="nav_info" style="height:100px;float:left">
-          <div id="nav_app_name"style="height:50px">
-              <a class="navbar-brand" href="#">{{ title }}</a>
-          </div>
-          <div id="nav_nav_item">
-              <!-- Collect the nav links, forms, and other content for toggling -->
-              <div class="collapse navbar-collapse" style="padding-left:0px" id="bs-example-navbar-collapse-1">
-                  <ul class="nav navbar-nav">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">按条件查询 <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">按养殖户检索</a></li>
-            <li><a href="#">按养殖面积检索</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">多重条件检索</a></li>
-          </ul>
-        </li>
-                      <!--class="active"-->
-        <li ><a href="#">信息入库</a></li>
-        <li><a href="#">信息更新</a></li>
-        <li><a href="#">信息统计</a></li>
-                      <li><a href="#">渔业环境监测</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-          </div>
-      </div>
+    <nav class="navbar navbar-default"style="height:100px;margin-bottom:0px;background:#2899da">
+        <div class="container-fluid" style="position:absolute;bottom:0px">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div id="nav_icon" style="width:100px;height:100px;float:left;display:none">
+                <img style="width:100px;height:100px"src="../static/images/fish.png">
+            </div>
+            <div id="nav_info" style="height:100px;float:left">
+                <div id="nav_app_name"style="height:50px">
+                    <h3 style="color:white;padding-top:10px;margin:0px;margin-left:10px">{{ title }}</h3>
+                </div>
+                <div id="nav_nav_item">
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" style="padding-left:0px" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle nav_font" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">按条件查询 <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">点击检索</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a  href="#">按养殖户检索</a></li>
+                                    <li><a  href="#">按养殖面积检索</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">多重条件检索</a></li>
+                                </ul>
+                            </li>
+                            <!--class="active"-->
+                            <li ><a class="nav_font" href="#">信息入库</a></li>
+                            <li><a class="nav_font" href="#">信息更新</a></li>
+                            <li><a class="nav_font" href="#">信息统计</a></li>
+                            <li><a class="nav_font" href="#">渔业环境监测</a></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div>
+            </div>
 
 
 
-  </div><!-- /.container-fluid -->
-</nav>
-{% endblock %}
-{% block content %}
-<div id="rootContainer">
-    {% block icontent %}
+        </div><!-- /.container-fluid -->
+    </nav>
     {% endblock %}
-</div>
-{% endblock %}
+    {% block content %}
+    <div id="rootContainer">
+        {% block icontent %}
+        {% endblock %}
+    </div>
+    {% endblock %}
 
-{%  block scripts %}
-{{ super() }}
-<script src="../static/js/ibase.js"></script>
-{%  endblock %}
+    {%  block scripts %}
+    {{ super() }}
+    <script src="../static/js/ibase.js"></script>
+    {%  endblock %}
 </div>
 {% endblock %}
